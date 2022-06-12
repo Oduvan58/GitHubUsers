@@ -5,8 +5,8 @@
     <dimen name="elevation_card_view">2dp</dimen>
     <dimen name="padding_card_view">4dp</dimen>
     <dimen name="padding_text_view">10dp</dimen>
-    <dimen name="text_size_login_text_view">32sp</dimen>
-    <dimen name="text_size_id_text_view">24sp</dimen>
+    <dimen name="text_size_login_text_view">24sp</dimen>
+    <dimen name="text_size_id_text_view">16sp</dimen>
     <dimen name="size_avatar_image_view">96dp</dimen>
-    <dimen name="margin_end_image_view">24dp</dimen>
+    <dimen name="margin_end_image_view">16dp</dimen>
 </resources>
