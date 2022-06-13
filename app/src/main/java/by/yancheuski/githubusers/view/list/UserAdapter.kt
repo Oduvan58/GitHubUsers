@@ -7,12 +7,16 @@ import by.yancheuski.githubusers.domain.entities.UserEntity
 
 class UserAdapter : RecyclerView.Adapter<UserViewHolder>() {
 
-    private var data = mutableListOf<UserEntity>()
+    init {
+        setHasStableIds(true)
+    }
+
+    private var usersData = mutableListOf<UserEntity>()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(users: List<UserEntity>) {
-        data.clear()
-        data.addAll(users)
+    fun setUsersData(data: List<UserEntity>) {
+        usersData.clear()
+        usersData.addAll(data)
         notifyDataSetChanged()
     }
 
@@ -24,7 +28,7 @@ class UserAdapter : RecyclerView.Adapter<UserViewHolder>() {
         holder.bind(getItem(position))
     }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount() = usersData.size
 
-    private fun getItem(pos: Int) = data[pos]
+    private fun getItem(pos: Int) = usersData[pos]
 }

@@ -1,40 +1,23 @@
 package by.yancheuski.githubusers.data
 
-import by.yancheuski.githubusers.domain.repos.GitHubUsersApi
-import com.google.gson.GsonBuilder
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Response
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
+import android.os.Handler
+import android.os.Looper
+import by.yancheuski.githubusers.domain.entities.UserEntity
+import by.yancheuski.githubusers.domain.repos.UsersRepo
 
-class UsersRetrofitImpl {
+private const val DATA_LOADING_FAKE_DELAY = 3_000L
 
-    private val baseUrl = "https://api.github.com/"
+class UsersRetrofitImpl : UsersRepo {
 
-    fun getRetrofitImpl(): GitHubUsersApi {
-        val podRetrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
-            .client(createOkHttpClient(MainPictureInterceptor()))
-            .build()
-        return podRetrofit.create(GitHubUsersApi::class.java)
-    }
+    private val data: List<UserEntity> = listOf(
+        UserEntity("mojombo", 1, "https://avatars.githubusercontent.com/u/1?v=4"),
+        UserEntity("defunkt", 2, "https://avatars.githubusercontent.com/u/2?v=4"),
+        UserEntity("pjhyett", 3, "https://avatars.githubusercontent.com/u/3?v=4"),
+    )
 
-    private fun createOkHttpClient(interceptor: Interceptor): OkHttpClient {
-        val httpClient = OkHttpClient.Builder()
-        httpClient.addInterceptor(interceptor)
-        httpClient.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-        return httpClient.build()
-    }
-
-    inner class MainPictureInterceptor : Interceptor {
-
-        @Throws(IOException::class)
-        override fun intercept(chain: Interceptor.Chain): Response {
-            return chain.proceed(chain.request())
-        }
+    override fun getUsers(onSuccess: (List<UserEntity>) -> Unit, onError: ((Throwable) -> Unit)?) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            onSuccess(data)
+        }, DATA_LOADING_FAKE_DELAY)
     }
 }
