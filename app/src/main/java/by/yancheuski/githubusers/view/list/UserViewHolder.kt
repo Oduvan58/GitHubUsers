@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.yancheuski.githubusers.R
 import by.yancheuski.githubusers.databinding.ItemUserBinding
-import by.yancheuski.githubusers.domain.UserEntity
+import by.yancheuski.githubusers.domain.entities.UserEntity
 import coil.api.load
 
 class UserViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(

@@ -3,7 +3,7 @@ package by.yancheuski.githubusers.view.list
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import by.yancheuski.githubusers.domain.UserEntity
+import by.yancheuski.githubusers.domain.entities.UserEntity
 
 class UserAdapter : RecyclerView.Adapter<UserViewHolder>() {
 
