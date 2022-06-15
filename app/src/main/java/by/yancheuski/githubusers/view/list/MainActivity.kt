@@ -20,11 +20,15 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter = UsersPresenter(app.usersRepo)
         initRecyclerView()
+        presenter = getPresenter()
         presenter.attach(this)
         presenter.onRefresh()
     }
+
+    private fun getPresenter() = lastCustomNonConfigurationInstance
+            as? UsersContract.Presenter
+        ?: UsersPresenter(app.usersRepo)
 
     override fun showProgress(inProgress: Boolean) {
         binding.progressBar.isVisible = inProgress
@@ -42,6 +46,10 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
     private fun initRecyclerView() {
         binding.listUsersRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.listUsersRecyclerView.adapter = adapter
+    }
+
+    override fun onRetainCustomNonConfigurationInstance(): UsersContract.Presenter {
+        return presenter
     }
 
     override fun onDestroy() {
