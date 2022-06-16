@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.yancheuski.githubusers.domain.entities.UserEntity
+import by.yancheuski.githubusers.view.OnClickUserListener
 
-class UserAdapter : RecyclerView.Adapter<UserViewHolder>() {
+class UserAdapter(private val clickOnUser: OnClickUserListener) :
+    RecyclerView.Adapter<UserViewHolder>() {
 
     init {
         setHasStableIds(true)
@@ -26,6 +28,7 @@ class UserAdapter : RecyclerView.Adapter<UserViewHolder>() {
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.bind(getItem(position))
+        holder.itemView.setOnClickListener { clickOnUser.onClickUser(getItem(position)) }
     }
 
     override fun getItemCount() = usersData.size

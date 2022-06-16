@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.yancheuski.githubusers.app
 import by.yancheuski.githubusers.databinding.ActivityMainBinding
 import by.yancheuski.githubusers.domain.entities.UserEntity
+import by.yancheuski.githubusers.view.OnClickUserListener
 
-class MainActivity : AppCompatActivity(), UsersContract.View {
+class MainActivity : AppCompatActivity(), UsersContract.View, OnClickUserListener {
 
     private lateinit var binding: ActivityMainBinding
-    private val adapter = UserAdapter()
+
+    //    private val adapter = UserAdapter()
+    private lateinit var adapter: UserAdapter
 
     private lateinit var presenter: UsersContract.Presenter
 
@@ -45,9 +48,11 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
 
     private fun initRecyclerView() {
         binding.listUsersRecyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = UserAdapter(this@MainActivity)
         binding.listUsersRecyclerView.adapter = adapter
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRetainCustomNonConfigurationInstance(): UsersContract.Presenter {
         return presenter
     }
@@ -55,5 +60,9 @@ class MainActivity : AppCompatActivity(), UsersContract.View {
     override fun onDestroy() {
         presenter.detach()
         super.onDestroy()
+    }
+
+    override fun onClickUser(user: UserEntity) {
+        Toast.makeText(this@MainActivity, user.login, Toast.LENGTH_SHORT).show()
     }
 }
