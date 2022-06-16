@@ -39,4 +39,25 @@ class UsersRetrofitImpl : UsersRepo {
             }
         })
     }
+
+    override fun getUser(
+        login: String,
+        onSuccess: (user: UserEntity) -> Unit,
+        onError: ((Throwable) -> Unit)?,
+    ) {
+        usersApi.getUserGit(login).enqueue(object : Callback<UserEntity> {
+            override fun onResponse(call: Call<UserEntity>, response: Response<UserEntity>) {
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    onSuccess.invoke(body)
+                } else {
+                    onError?.invoke(Throwable())
+                }
+            }
+
+            override fun onFailure(call: Call<UserEntity>, t: Throwable) {
+                onError?.let { it(t) }
+            }
+        })
+    }
 }

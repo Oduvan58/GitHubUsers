@@ -13,8 +13,6 @@ import by.yancheuski.githubusers.view.OnClickUserListener
 class MainActivity : AppCompatActivity(), UsersContract.View, OnClickUserListener {
 
     private lateinit var binding: ActivityMainBinding
-
-    //    private val adapter = UserAdapter()
     private lateinit var adapter: UserAdapter
 
     private lateinit var presenter: UsersContract.Presenter
