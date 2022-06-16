@@ -1,5 +1,6 @@
 package by.yancheuski.githubusers.view.list
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,8 @@ import by.yancheuski.githubusers.app
 import by.yancheuski.githubusers.databinding.ActivityMainBinding
 import by.yancheuski.githubusers.domain.entities.UserEntity
 import by.yancheuski.githubusers.view.OnClickUserListener
+import by.yancheuski.githubusers.view.details.USER_EXTRA_KEY
+import by.yancheuski.githubusers.view.details.UserProfileActivity
 
 class MainActivity : AppCompatActivity(), UsersContract.View, OnClickUserListener {
 
@@ -61,6 +64,9 @@ class MainActivity : AppCompatActivity(), UsersContract.View, OnClickUserListene
     }
 
     override fun onClickUser(user: UserEntity) {
-        Toast.makeText(this@MainActivity, user.login, Toast.LENGTH_SHORT).show()
+        startActivity(Intent(this@MainActivity, UserProfileActivity::class.java)
+            .apply {
+                putExtra(USER_EXTRA_KEY, user.login)
+            })
     }
 }
