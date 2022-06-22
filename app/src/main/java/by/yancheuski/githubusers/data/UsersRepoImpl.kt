@@ -20,4 +20,12 @@ class UsersRepoImpl : UsersRepo {
             onSuccess(data)
         }, DATA_LOADING_FAKE_DELAY)
     }
+
+    override fun getUser(
+        login: String,
+        onSuccess: (user: UserEntity) -> Unit,
+        onError: ((Throwable) -> Unit)?,
+    ) {
+        TODO("Not yet implemented")
+    }
 }

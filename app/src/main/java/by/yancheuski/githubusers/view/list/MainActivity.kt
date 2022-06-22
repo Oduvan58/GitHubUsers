@@ -1,5 +1,6 @@
 package by.yancheuski.githubusers.view.list
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,51 +9,64 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.yancheuski.githubusers.app
 import by.yancheuski.githubusers.databinding.ActivityMainBinding
 import by.yancheuski.githubusers.domain.entities.UserEntity
-import by.yancheuski.githubusers.domain.repos.UsersRepo
+import by.yancheuski.githubusers.view.OnClickUserListener
+import by.yancheuski.githubusers.view.details.USER_EXTRA_KEY
+import by.yancheuski.githubusers.view.details.UserProfileActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UsersContract.View, OnClickUserListener {
 
     private lateinit var binding: ActivityMainBinding
-    private val adapter = UserAdapter()
-    private val userRepo: UsersRepo by lazy { app.usersRepo }
+    private lateinit var adapter: UserAdapter
+
+    private lateinit var presenter: UsersContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        loadData()
         initRecyclerView()
+        presenter = getPresenter()
+        presenter.attach(this)
+        presenter.onRefresh()
     }
 
-    private fun loadData() {
-        showProgress(true)
-        userRepo.getUsers(
-            onSuccess = {
-                showProgress(false)
-                onDataLoaded(it)
-            },
-            onError = {
-                showProgress(false)
-                onError(it)
-            }
-        )
-    }
+    private fun getPresenter() = lastCustomNonConfigurationInstance
+            as? UsersContract.Presenter
+        ?: UsersPresenter(app.usersRepo)
 
-    private fun showProgress(inProgress: Boolean) {
+    override fun showProgress(inProgress: Boolean) {
         binding.progressBar.isVisible = inProgress
         binding.listUsersRecyclerView.isVisible = !inProgress
     }
 
-    private fun onDataLoaded(data: List<UserEntity>) {
-        adapter.setUsersData(data)
+    override fun showUsers(users: List<UserEntity>) {
+        adapter.setUsersData(users)
     }
 
-    private fun onError(throwable: Throwable) {
-        Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
+    override fun showError(error: Throwable) {
+        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
     }
 
     private fun initRecyclerView() {
         binding.listUsersRecyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = UserAdapter(this@MainActivity)
         binding.listUsersRecyclerView.adapter = adapter
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onRetainCustomNonConfigurationInstance(): UsersContract.Presenter {
+        return presenter
+    }
+
+    override fun onDestroy() {
+        presenter.detach()
+        super.onDestroy()
+    }
+
+    override fun onClickUser(user: UserEntity) {
+        startActivity(Intent(this@MainActivity, UserProfileActivity::class.java)
+            .apply {
+                putExtra(USER_EXTRA_KEY, user.login)
+            })
     }
 }
