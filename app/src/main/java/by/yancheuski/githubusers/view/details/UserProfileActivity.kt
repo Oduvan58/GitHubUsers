@@ -10,25 +10,33 @@ import coil.api.load
 
 const val USER_EXTRA_KEY = "USER_EXTRA_KEY"
 
-class UserProfileActivity : AppCompatActivity(), UserContract.View {
+class UserProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserProfileBinding
     private var login = ""
-    private lateinit var presenter: UserContract.Presenter
+    private lateinit var viewModel: UserProfileViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         getUser()
-
-        presenter = UserPresenter(app.usersRepo)
-        presenter.attach(this)
-        presenter.onRefresh(login)
+        initViewModel()
+        viewModel.onRefresh(login)
     }
 
-    override fun showUser(user: UserEntity) {
+    private fun initViewModel() {
+        viewModel = getViewModel()
+        viewModel.userLiveData.observe(this) { showUser(it) }
+        viewModel.errorLiveData.observe(this) { showError(it) }
+    }
+
+    private fun getViewModel(): UserProfileViewModel {
+        return lastCustomNonConfigurationInstance as? UserProfileViewModel
+            ?: UserProfileViewModel(app.usersRepo)
+    }
+
+    private fun showUser(user: UserEntity) {
         with(binding) {
             avatarUserProfileImageView.load(user.avatarUrl)
             loginUserProfileTextView.text = user.login
@@ -36,8 +44,10 @@ class UserProfileActivity : AppCompatActivity(), UserContract.View {
         }
     }
 
-    override fun showError(error: Throwable) {
-        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
+    private fun showError(error: Throwable) {
+        if (error.message != null) {
+            Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun getUser() {
@@ -46,10 +56,5 @@ class UserProfileActivity : AppCompatActivity(), UserContract.View {
             login = infoUser.getString(USER_EXTRA_KEY, "")
             binding.loginUserProfileTextView.text = login
         }
-    }
-
-    override fun onDestroy() {
-        presenter.detach()
-        super.onDestroy()
     }
 }
