@@ -1,4 +1,4 @@
-package by.yancheuski.githubusers.domain.repos
+package by.yancheuski.githubusers.data
 
 import by.yancheuski.githubusers.domain.entities.UserEntity
 import retrofit2.Call

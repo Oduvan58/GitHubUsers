@@ -13,37 +13,49 @@ import by.yancheuski.githubusers.view.OnClickUserListener
 import by.yancheuski.githubusers.view.details.USER_EXTRA_KEY
 import by.yancheuski.githubusers.view.details.UserProfileActivity
 
-class MainActivity : AppCompatActivity(), UsersContract.View, OnClickUserListener {
+class MainActivity : AppCompatActivity(), OnClickUserListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: UserAdapter
 
-    private lateinit var presenter: UsersContract.Presenter
+    private lateinit var viewModel: UsersViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initRecyclerView()
-        presenter = getPresenter()
-        presenter.attach(this)
-        presenter.onRefresh()
+        initViewModel()
+        viewModel.loadData()
     }
 
-    private fun getPresenter() = lastCustomNonConfigurationInstance
-            as? UsersContract.Presenter
-        ?: UsersPresenter(app.usersRepo)
+    private fun initViewModel() {
+        viewModel = getViewModel()
+        viewModel.progressLiveData.observe(this) { showProgress(it) }
+        viewModel.usersLiveData.observe(this) { showUsers(it) }
+        viewModel.errorLiveData.observe(this) { showError(it) }
+    }
 
-    override fun showProgress(inProgress: Boolean) {
+    private fun getViewModel(): UsersViewModel {
+        return lastCustomNonConfigurationInstance as? UsersViewModel
+            ?: UsersViewModel(app.usersRepo)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onRetainCustomNonConfigurationInstance(): UsersViewModel {
+        return viewModel
+    }
+
+    private fun showProgress(inProgress: Boolean) {
         binding.progressBar.isVisible = inProgress
         binding.listUsersRecyclerView.isVisible = !inProgress
     }
 
-    override fun showUsers(users: List<UserEntity>) {
+    private fun showUsers(users: List<UserEntity>) {
         adapter.setUsersData(users)
     }
 
-    override fun showError(error: Throwable) {
+    private fun showError(error: Throwable) {
         Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
     }
 
@@ -51,16 +63,6 @@ class MainActivity : AppCompatActivity(), UsersContract.View, OnClickUserListene
         binding.listUsersRecyclerView.layoutManager = LinearLayoutManager(this)
         adapter = UserAdapter(this@MainActivity)
         binding.listUsersRecyclerView.adapter = adapter
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onRetainCustomNonConfigurationInstance(): UsersContract.Presenter {
-        return presenter
-    }
-
-    override fun onDestroy() {
-        presenter.detach()
-        super.onDestroy()
     }
 
     override fun onClickUser(user: UserEntity) {
