@@ -1,7 +1,6 @@
 package by.yancheuski.githubusers.data
 
 import by.yancheuski.githubusers.domain.entities.UserEntity
-import by.yancheuski.githubusers.domain.repos.GitHubUsersApi
 import by.yancheuski.githubusers.domain.repos.UsersRepo
 import retrofit2.Call
 import retrofit2.Callback

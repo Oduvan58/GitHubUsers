@@ -3,7 +3,6 @@ package by.yancheuski.githubusers
 import android.app.Application
 import android.content.Context
 import by.yancheuski.githubusers.data.UsersRetrofitImpl
-import by.yancheuski.githubusers.domain.repos.GitHubUsersApi
 import by.yancheuski.githubusers.domain.repos.UsersRepo
 
 class App : Application() {
