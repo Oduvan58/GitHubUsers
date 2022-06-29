@@ -7,6 +7,7 @@ import by.yancheuski.githubusers.app
 import by.yancheuski.githubusers.databinding.ActivityUserProfileBinding
 import by.yancheuski.githubusers.domain.entities.UserEntity
 import coil.api.load
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 const val USER_EXTRA_KEY = "USER_EXTRA_KEY"
 
@@ -15,6 +16,7 @@ class UserProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserProfileBinding
     private var login = ""
     private lateinit var viewModel: UserProfileViewModel
+    private var viewModelDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +29,10 @@ class UserProfileActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         viewModel = getViewModel()
-        viewModel.userLiveData.observe(this) { showUser(it) }
-        viewModel.errorLiveData.observe(this) { showError(it) }
+        viewModelDisposable.addAll(
+            viewModel.userLiveData.subscribe { showUser(it) },
+            viewModel.errorLiveData.subscribe { showError(it) }
+        )
     }
 
     private fun getViewModel(): UserProfileViewModel {
@@ -56,5 +60,10 @@ class UserProfileActivity : AppCompatActivity() {
             login = infoUser.getString(USER_EXTRA_KEY, "")
             binding.loginUserProfileTextView.text = login
         }
+    }
+
+    override fun onDestroy() {
+        viewModelDisposable.dispose()
+        super.onDestroy()
     }
 }
