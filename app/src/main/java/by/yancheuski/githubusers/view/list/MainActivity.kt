@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.yancheuski.githubusers.app
 import by.yancheuski.githubusers.databinding.ActivityMainBinding
 import by.yancheuski.githubusers.domain.entities.UserEntity
-import by.yancheuski.githubusers.utils.observableClickListener
 import by.yancheuski.githubusers.view.OnClickUserListener
 import by.yancheuski.githubusers.view.details.USER_EXTRA_KEY
 import by.yancheuski.githubusers.view.details.UserProfileActivity
@@ -35,9 +34,14 @@ class MainActivity : AppCompatActivity(), OnClickUserListener {
     }
 
     private fun showListOfUsers() {
-        binding.loadButton.observableClickListener().subscribe {
-            viewModel.loadData()
-        }
+
+        // Class CustomButton
+        binding.loadButton.buttonObservable.subscribe { viewModel.loadData() }
+
+        // Extension function
+//        binding.loadButton.observableClickListener().subscribe {
+//            viewModel.loadData()
+//        }
     }
 
     private fun initViewModel() {
