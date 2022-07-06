@@ -6,13 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".view.list.MainActivity">
 
+    <Button
+        android:id="@+id/load_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_default_button"
+        android:backgroundTint="@color/steel_blue"
+        android:text="@string/text_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_users_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/load_button" />
 
     <FrameLayout
         android:layout_width="match_parent"

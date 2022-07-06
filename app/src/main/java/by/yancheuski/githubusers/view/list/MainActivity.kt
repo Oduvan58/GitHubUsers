@@ -29,7 +29,14 @@ class MainActivity : AppCompatActivity(), OnClickUserListener {
         setContentView(binding.root)
         initRecyclerView()
         initViewModel()
-        viewModel.loadData()
+        showProgress(true)
+        showListOfUsers()
+    }
+
+    private fun showListOfUsers() {
+        binding.loadButton.setOnClickListener {
+            viewModel.loadData()
+        }
     }
 
     private fun initViewModel() {
@@ -53,7 +60,9 @@ class MainActivity : AppCompatActivity(), OnClickUserListener {
 
     private fun showProgress(inProgress: Boolean) {
         binding.progressBar.isVisible = inProgress
-        binding.listUsersRecyclerView.isVisible = !inProgress
+        binding.progressBar.isVisible = !inProgress
+
+//        binding.listUsersRecyclerView.isVisible = !inProgress
     }
 
     private fun showUsers(users: List<UserEntity>) {

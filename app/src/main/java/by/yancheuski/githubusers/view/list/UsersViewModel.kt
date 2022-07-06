@@ -16,16 +16,16 @@ class UsersViewModel(private val usersRepo: UsersRepo) : ViewModel() {
     val errorLiveData: Observable<Throwable> = BehaviorSubject.create()
 
     fun loadData() {
-        progressLiveData.mutable().onNext(true)
+        progressLiveData.mutable().onNext(false)
         usersRepo.getUsers()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = {
-                    progressLiveData.mutable().onNext(false)
+                    progressLiveData.mutable().onNext(true)
                     usersLiveData.mutable().onNext(it)
                 },
                 onError = {
-                    progressLiveData.mutable().onNext(false)
+                    progressLiveData.mutable().onNext(true)
                     errorLiveData.mutable().onNext(it)
                 }
             )
