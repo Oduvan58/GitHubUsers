@@ -6,21 +6,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import by.yancheuski.githubusers.app
 import by.yancheuski.githubusers.databinding.ActivityMainBinding
 import by.yancheuski.githubusers.domain.entities.UserEntity
-import by.yancheuski.githubusers.domain.repos.UsersRepo
 import by.yancheuski.githubusers.view.OnClickUserListener
 import by.yancheuski.githubusers.view.details.USER_EXTRA_KEY
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), OnClickUserListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: UserAdapter
-    private lateinit var viewModel: UsersViewModel
-    private val usersRepo: UsersRepo by lazy { app.usersRepo }
+    private val viewModel: UsersViewModel by viewModel()
     private var viewModelDisposable = CompositeDisposable()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,22 +36,11 @@ class MainActivity : AppCompatActivity(), OnClickUserListener {
     }
 
     private fun initViewModel() {
-        viewModel = getViewModel()
         viewModelDisposable.addAll(
             viewModel.progressLiveData.subscribe { showProgress(it) },
             viewModel.usersLiveData.subscribe { showUsers(it) },
             viewModel.errorLiveData.subscribe { showError(it) }
         )
-    }
-
-    private fun getViewModel(): UsersViewModel {
-        return lastCustomNonConfigurationInstance as? UsersViewModel
-            ?: UsersViewModel(usersRepo)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onRetainCustomNonConfigurationInstance(): UsersViewModel {
-        return viewModel
     }
 
     private fun showProgress(inProgress: Boolean) {

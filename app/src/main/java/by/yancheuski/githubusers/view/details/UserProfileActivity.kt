@@ -3,12 +3,11 @@ package by.yancheuski.githubusers.view.details
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import by.yancheuski.githubusers.app
 import by.yancheuski.githubusers.databinding.ActivityUserProfileBinding
 import by.yancheuski.githubusers.domain.entities.UserProfileEntity
-import by.yancheuski.githubusers.domain.repos.UsersRepo
 import coil.api.load
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 const val USER_EXTRA_KEY = "USER_EXTRA_KEY"
 
@@ -16,9 +15,8 @@ class UserProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserProfileBinding
     private var login = ""
-    private lateinit var viewModel: UserProfileViewModel
+    private val viewModel: UserProfileViewModel by viewModel()
     private var viewModelDisposable = CompositeDisposable()
-    private val usersRepo: UsersRepo by lazy { app.usersRepo }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,16 +28,10 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = getViewModel()
         viewModelDisposable.addAll(
             viewModel.userLiveData.subscribe { showUser(it) },
             viewModel.errorLiveData.subscribe { showError(it) }
         )
-    }
-
-    private fun getViewModel(): UserProfileViewModel {
-        return lastCustomNonConfigurationInstance as? UserProfileViewModel
-            ?: UserProfileViewModel(usersRepo)
     }
 
     private fun showUser(user: UserProfileEntity) {
