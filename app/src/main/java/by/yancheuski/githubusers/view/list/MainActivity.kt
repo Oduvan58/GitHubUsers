@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.yancheuski.githubusers.app
 import by.yancheuski.githubusers.databinding.ActivityMainBinding
 import by.yancheuski.githubusers.domain.entities.UserEntity
+import by.yancheuski.githubusers.domain.repos.UsersRepo
 import by.yancheuski.githubusers.view.OnClickUserListener
 import by.yancheuski.githubusers.view.details.USER_EXTRA_KEY
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -17,9 +18,8 @@ class MainActivity : AppCompatActivity(), OnClickUserListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: UserAdapter
-
     private lateinit var viewModel: UsersViewModel
-
+    private val usersRepo: UsersRepo by lazy { app.usersRepo }
     private var viewModelDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), OnClickUserListener {
 
     private fun getViewModel(): UsersViewModel {
         return lastCustomNonConfigurationInstance as? UsersViewModel
-            ?: UsersViewModel(app.usersRepo)
+            ?: UsersViewModel(usersRepo)
     }
 
     @Deprecated("Deprecated in Java")

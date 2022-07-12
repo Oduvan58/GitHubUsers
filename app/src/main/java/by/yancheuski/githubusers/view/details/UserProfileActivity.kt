@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import by.yancheuski.githubusers.app
 import by.yancheuski.githubusers.databinding.ActivityUserProfileBinding
 import by.yancheuski.githubusers.domain.entities.UserProfileEntity
+import by.yancheuski.githubusers.domain.repos.UsersRepo
 import coil.api.load
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
@@ -17,6 +18,7 @@ class UserProfileActivity : AppCompatActivity() {
     private var login = ""
     private lateinit var viewModel: UserProfileViewModel
     private var viewModelDisposable = CompositeDisposable()
+    private val usersRepo: UsersRepo by lazy { app.usersRepo }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +39,7 @@ class UserProfileActivity : AppCompatActivity() {
 
     private fun getViewModel(): UserProfileViewModel {
         return lastCustomNonConfigurationInstance as? UserProfileViewModel
-            ?: UserProfileViewModel(app.usersRepo)
+            ?: UserProfileViewModel(usersRepo)
     }
 
     private fun showUser(user: UserProfileEntity) {
