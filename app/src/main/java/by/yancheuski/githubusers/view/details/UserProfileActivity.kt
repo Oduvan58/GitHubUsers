@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import by.yancheuski.githubusers.app
 import by.yancheuski.githubusers.databinding.ActivityUserProfileBinding
-import by.yancheuski.githubusers.domain.entities.UserEntity
+import by.yancheuski.githubusers.domain.entities.UserProfileEntity
 import coil.api.load
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
@@ -40,11 +40,14 @@ class UserProfileActivity : AppCompatActivity() {
             ?: UserProfileViewModel(app.usersRepo)
     }
 
-    private fun showUser(user: UserEntity) {
+    private fun showUser(user: UserProfileEntity) {
         with(binding) {
             avatarUserProfileImageView.load(user.avatarUrl)
             loginUserProfileTextView.text = user.login
             idUserProfileTextView.text = user.id.toString()
+            nameUserProfileTextView.text = user.name
+            companyUserProfileTextView.text = user.company
+            locationUserProfileTextView.text = user.location
         }
     }
 

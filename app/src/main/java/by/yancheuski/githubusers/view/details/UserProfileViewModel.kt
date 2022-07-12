@@ -2,6 +2,7 @@ package by.yancheuski.githubusers.view.details
 
 import androidx.lifecycle.ViewModel
 import by.yancheuski.githubusers.domain.entities.UserEntity
+import by.yancheuski.githubusers.domain.entities.UserProfileEntity
 import by.yancheuski.githubusers.domain.repos.UsersRepo
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -11,7 +12,7 @@ import io.reactivex.rxjava3.subjects.Subject
 
 class UserProfileViewModel(private val userRepo: UsersRepo) : ViewModel() {
 
-    val userLiveData: Observable<UserEntity> = BehaviorSubject.create()
+    val userLiveData: Observable<UserProfileEntity> = BehaviorSubject.create()
     val errorLiveData: Observable<Throwable> = BehaviorSubject.create()
     private lateinit var login: String
 

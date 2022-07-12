@@ -1,4 +1,4 @@
-package by.yancheuski.githubusers.utils
+package by.yancheuski.githubusers.view.components
 
 import android.content.Context
 import android.util.AttributeSet
