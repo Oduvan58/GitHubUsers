@@ -1,7 +1,6 @@
 package by.yancheuski.githubusers.view.details
 
 import androidx.lifecycle.ViewModel
-import by.yancheuski.githubusers.domain.entities.UserEntity
 import by.yancheuski.githubusers.domain.entities.UserProfileEntity
 import by.yancheuski.githubusers.domain.repos.UsersRepo
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers

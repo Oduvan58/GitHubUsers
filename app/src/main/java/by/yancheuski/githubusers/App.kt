@@ -2,21 +2,12 @@ package by.yancheuski.githubusers
 
 import android.app.Application
 import android.content.Context
-import by.yancheuski.githubusers.di.appModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
+import by.yancheuski.githubusers.di.AppComponent
+import by.yancheuski.githubusers.di.DaggerAppComponent
 
 class App : Application() {
 
-    override fun onCreate() {
-        super.onCreate()
-        startKoin {
-            androidLogger()
-            androidContext(this@App)
-            modules(appModule)
-        }
-    }
+    val appComponent: AppComponent by lazy { DaggerAppComponent.create() }
 }
 
 val Context.app: App get() = applicationContext as App
