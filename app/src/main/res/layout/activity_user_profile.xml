@@ -19,29 +19,133 @@
         app:srcCompat="@drawable/ic_no_avatar" />
 
     <TextView
+        android:id="@+id/name_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_start_default_text_view"
+        android:layout_marginTop="@dimen/size_margin_top_main"
+        android:text="@string/name"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_title_text_view"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/avatar_user_profile_image_view" />
+
+    <TextView
+        android:id="@+id/name_user_profile_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_start_info_text_view"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_title_text_view"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@id/name_title_text_view"
+        app:layout_constraintStart_toEndOf="@id/name_title_text_view"
+        app:layout_constraintTop_toTopOf="@id/name_title_text_view"
+        tools:text="name" />
+
+    <TextView
+        android:id="@+id/login_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_start_default_text_view"
+        android:layout_marginTop="@dimen/margin_top_default_text_view"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_title_text_view"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name_title_text_view" />
+
+    <TextView
         android:id="@+id/login_user_profile_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_margin_top"
+        android:layout_marginStart="@dimen/margin_start_info_text_view"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size_login_profile_text_view"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/text_size_title_text_view"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@id/login_title_text_view"
+        app:layout_constraintStart_toEndOf="@id/login_title_text_view"
+        app:layout_constraintTop_toTopOf="@id/login_title_text_view"
+        tools:text="login" />
+
+    <TextView
+        android:id="@+id/id_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_start_default_text_view"
+        android:layout_marginTop="@dimen/margin_top_default_text_view"
+        android:text="@string/id"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_title_text_view"
+        android:textStyle="normal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/avatar_user_profile_image_view"
-        tools:text="Login" />
+        app:layout_constraintTop_toBottomOf="@id/login_title_text_view" />
 
     <TextView
         android:id="@+id/id_user_profile_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_margin_top_id"
+        android:layout_marginStart="@dimen/margin_start_info_text_view"
         android:textColor="@color/white"
-        android:textSize="@dimen/text_size_id_profile_text_view"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login_user_profile_text_view"
+        android:textSize="@dimen/text_size_title_text_view"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@id/id_title_text_view"
+        app:layout_constraintStart_toEndOf="@id/id_title_text_view"
+        app:layout_constraintTop_toTopOf="@id/id_title_text_view"
         tools:text="id" />
+
+    <TextView
+        android:id="@+id/company_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_start_default_text_view"
+        android:layout_marginTop="@dimen/margin_top_default_text_view"
+        android:text="@string/company"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_title_text_view"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/id_title_text_view" />
+
+    <TextView
+        android:id="@+id/company_user_profile_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_start_info_text_view"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_title_text_view"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@id/company_title_text_view"
+        app:layout_constraintStart_toEndOf="@id/company_title_text_view"
+        app:layout_constraintTop_toTopOf="@id/company_title_text_view"
+        tools:text="company" />
+
+    <TextView
+        android:id="@+id/location_title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_start_default_text_view"
+        android:layout_marginTop="@dimen/margin_top_default_text_view"
+        android:text="@string/location"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_title_text_view"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/company_title_text_view" />
+
+    <TextView
+        android:id="@+id/location_user_profile_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_start_info_text_view"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_title_text_view"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@id/location_title_text_view"
+        app:layout_constraintStart_toEndOf="@id/location_title_text_view"
+        app:layout_constraintTop_toTopOf="@id/location_title_text_view"
+        tools:text="location" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

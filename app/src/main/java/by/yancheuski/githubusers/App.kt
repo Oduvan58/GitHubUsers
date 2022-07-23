@@ -2,12 +2,21 @@ package by.yancheuski.githubusers
 
 import android.app.Application
 import android.content.Context
-import by.yancheuski.githubusers.data.retrofit.UsersRetrofitImpl
-import by.yancheuski.githubusers.domain.repos.UsersRepo
+import by.yancheuski.githubusers.di.appModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 
 class App : Application() {
 
-    val usersRepo: UsersRepo by lazy { UsersRetrofitImpl() }
+    override fun onCreate() {
+        super.onCreate()
+        startKoin {
+            androidLogger()
+            androidContext(this@App)
+            modules(appModule)
+        }
+    }
 }
 
 val Context.app: App get() = applicationContext as App

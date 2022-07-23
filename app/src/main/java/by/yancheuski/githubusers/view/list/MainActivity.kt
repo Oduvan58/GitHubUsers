@@ -6,22 +6,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import by.yancheuski.githubusers.app
 import by.yancheuski.githubusers.databinding.ActivityMainBinding
 import by.yancheuski.githubusers.domain.entities.UserEntity
 import by.yancheuski.githubusers.view.OnClickUserListener
 import by.yancheuski.githubusers.view.details.USER_EXTRA_KEY
-import by.yancheuski.githubusers.view.details.UserProfileActivity
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity(), OnClickUserListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: UserAdapter
-
-    private lateinit var viewModel: UsersViewModel
-
+    private val viewModel: UsersViewModel by viewModel()
     private var viewModelDisposable = CompositeDisposable()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,33 +32,15 @@ class MainActivity : AppCompatActivity(), OnClickUserListener {
     }
 
     private fun showListOfUsers() {
-
-        // Class CustomButton
         binding.loadButton.buttonObservable.subscribe { viewModel.loadData() }
-
-        // Extension function
-//        binding.loadButton.observableClickListener().subscribe {
-//            viewModel.loadData()
-//        }
     }
 
     private fun initViewModel() {
-        viewModel = getViewModel()
         viewModelDisposable.addAll(
             viewModel.progressLiveData.subscribe { showProgress(it) },
             viewModel.usersLiveData.subscribe { showUsers(it) },
             viewModel.errorLiveData.subscribe { showError(it) }
         )
-    }
-
-    private fun getViewModel(): UsersViewModel {
-        return lastCustomNonConfigurationInstance as? UsersViewModel
-            ?: UsersViewModel(app.usersRepo)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onRetainCustomNonConfigurationInstance(): UsersViewModel {
-        return viewModel
     }
 
     private fun showProgress(inProgress: Boolean) {
@@ -83,7 +63,7 @@ class MainActivity : AppCompatActivity(), OnClickUserListener {
     }
 
     override fun onClickUser(user: UserEntity) {
-        startActivity(Intent(this@MainActivity, UserProfileActivity::class.java)
+        startActivity(Intent("show user")
             .apply {
                 putExtra(USER_EXTRA_KEY, user.login)
             })

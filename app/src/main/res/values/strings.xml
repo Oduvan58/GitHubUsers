@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">GitHubUsers</string>
     <string name="text_button">Load list</string>
+    <string name="name">Name:</string>
+    <string name="login">Login:</string>
+    <string name="id">id:</string>
+    <string name="company">Company:</string>
+    <string name="location">Location:</string>
 </resources>
