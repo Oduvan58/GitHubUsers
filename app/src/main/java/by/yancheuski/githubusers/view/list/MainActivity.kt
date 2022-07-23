@@ -6,18 +6,21 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.yancheuski.githubusers.app
 import by.yancheuski.githubusers.databinding.ActivityMainBinding
 import by.yancheuski.githubusers.domain.entities.UserEntity
 import by.yancheuski.githubusers.view.OnClickUserListener
 import by.yancheuski.githubusers.view.details.USER_EXTRA_KEY
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), OnClickUserListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: UserAdapter
-    private val viewModel: UsersViewModel by viewModel()
+
+    @Inject
+    lateinit var viewModel: UsersViewModel
     private var viewModelDisposable = CompositeDisposable()
 
 
@@ -25,6 +28,7 @@ class MainActivity : AppCompatActivity(), OnClickUserListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        app.appComponent.inject(this)
         initRecyclerView()
         initViewModel()
         showProgress(true)
