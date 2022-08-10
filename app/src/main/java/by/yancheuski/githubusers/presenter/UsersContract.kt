@@ -1,17 +1,18 @@
-package by.yancheuski.githubusers.view.details
+package by.yancheuski.githubusers.presenter
 
 import by.yancheuski.githubusers.domain.entities.UserEntity
 
-interface UserContract {
+interface UsersContract {
 
     interface View {
-        fun showUser(user: UserEntity)
+        fun showUsers(users: List<UserEntity>)
+        fun showProgress(inProgress: Boolean)
         fun showError(error: Throwable)
     }
 
     interface Presenter {
         fun attach(view: View)
         fun detach()
-        fun onRefresh(login: String)
+        fun onRefresh()
     }
 }

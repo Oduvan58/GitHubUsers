@@ -1,4 +1,4 @@
-package by.yancheuski.githubusers.view.list
+package by.yancheuski.githubusers.presenter
 
 import by.yancheuski.githubusers.domain.entities.UserEntity
 import by.yancheuski.githubusers.domain.repos.UsersRepo

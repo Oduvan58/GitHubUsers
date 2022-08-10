@@ -1,4 +1,4 @@
-package by.yancheuski.githubusers.view.details
+package by.yancheuski.githubusers.presenter
 
 import by.yancheuski.githubusers.domain.repos.UsersRepo
 

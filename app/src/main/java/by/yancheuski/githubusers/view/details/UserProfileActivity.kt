@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import by.yancheuski.githubusers.app
 import by.yancheuski.githubusers.databinding.ActivityUserProfileBinding
 import by.yancheuski.githubusers.domain.entities.UserEntity
+import by.yancheuski.githubusers.presenter.UserContract
+import by.yancheuski.githubusers.presenter.UserPresenter
 import coil.api.load
 
 const val USER_EXTRA_KEY = "USER_EXTRA_KEY"

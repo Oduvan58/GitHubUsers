@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.yancheuski.githubusers.app
 import by.yancheuski.githubusers.databinding.ActivityMainBinding
 import by.yancheuski.githubusers.domain.entities.UserEntity
+import by.yancheuski.githubusers.presenter.UsersContract
+import by.yancheuski.githubusers.presenter.UsersPresenter
 import by.yancheuski.githubusers.view.OnClickUserListener
 import by.yancheuski.githubusers.view.details.USER_EXTRA_KEY
 import by.yancheuski.githubusers.view.details.UserProfileActivity
